@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prévia do Instagram – Fuzion</title>
+<style>
+  :root{--bg:#fafafa;--card:#fff;--line:#dbdbdb;--ink:#111;--mut:#737373;--acc:#d62828;--blue:#0095f6}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  .app{max-width:470px;margin:0 auto;background:var(--card);min-height:100vh;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+  /* meses */
+  .months{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 12px 8px}
+  .months .yr{font-size:11px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;margin:0 2px 6px;display:flex;justify-content:space-between}
+  .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;padding:7px 12px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:600;color:#262626;background:#fff;position:relative}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip.has::after{content:"";position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--acc)}
+  .chip.lock{color:#a8a8a8}
+  /* topo do perfil */
+  .bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 4px}
+  .bar h1{font-size:20px;font-weight:700;display:flex;align-items:center;gap:6px}
+  .prof{display:flex;align-items:center;gap:24px;padding:10px 16px 6px}
+  .avatar{width:84px;height:84px;border-radius:50%;padding:3px;background:conic-gradient(#f9ce34,#ee2a7b,#6228d7,#f9ce34);flex:0 0 auto}
+  .avatar>div{width:100%;height:100%;border-radius:50%;border:3px solid #fff;background:#111;color:#fff;display:grid;place-items:center;font:700 30px Poppins,sans-serif}
+  .stats{flex:1;display:flex;justify-content:space-around;text-align:center}
+  .stats b{display:block;font-size:17px}
+  .stats span{font-size:13px;color:#262626}
+  .bio{padding:4px 16px 10px;font-size:14px;line-height:1.35}
+  .bio b{display:block}
+  .note{margin:0 16px 10px;padding:8px 10px;border-radius:8px;background:#fff7e6;border:1px solid #f3d7a0;font-size:12px;color:#7a5200;line-height:1.4}
+  /* stories */
+  .hl{display:flex;gap:14px;overflow-x:auto;padding:6px 16px 12px;scrollbar-width:none}
+  .hl::-webkit-scrollbar{display:none}
+  .hl .s{flex:0 0 auto;width:66px;text-align:center;font-size:11px;color:#262626}
+  .hl .ring{width:66px;height:66px;border-radius:50%;padding:2px;background:conic-gradient(#f9ce34,#ee2a7b,#6228d7,#f9ce34)}
+  .hl .ring>div{width:100%;height:100%;border-radius:50%;border:2px solid #fff;background:#222;color:#fff;display:grid;place-items:center;font:600 13px Inter}
+  .hl .empty{font-size:12px;color:var(--mut);padding:4px 0}
+  /* abas */
+  .tabs{display:flex;border-top:1px solid var(--line)}
+  .tabs button{flex:1;padding:11px 0;display:flex;justify-content:center;border-top:1px solid transparent;margin-top:-1px;color:var(--mut)}
+  .tabs button.on{border-top-color:var(--ink);color:var(--ink)}
+  .tabs svg{width:22px;height:22px}
+  /* grade */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .tile{position:relative;aspect-ratio:3/4;overflow:hidden;background:#111}
+  .tile img,.tile video{width:100%;height:100%;object-fit:cover;display:block}
+  .tile .ico{position:absolute;top:6px;right:6px;width:18px;height:18px;color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .tile .dt{position:absolute;left:6px;bottom:6px;font-size:10px;font-weight:600;color:#fff;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:4px}
+  .ph{width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;padding:10px;background:#0f0f0f;color:#fff;font-family:Poppins,sans-serif}
+  .ph::before{content:"";display:block;width:22px;height:3px;background:var(--acc);margin-bottom:8px}
+  .ph .t{font-size:11.5px;font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+  .ph .k{font-size:9px;opacity:.6;margin-top:6px;letter-spacing:.06em;text-transform:uppercase}
+  .ph.reel{background:linear-gradient(160deg,#2b0a0a,#0f0f0f)}
+  .ph.dump{background:linear-gradient(160deg,#3a3a3a,#1b1b1b)}
+  .locked{padding:56px 28px;text-align:center;color:var(--mut)}
+  .locked svg{width:44px;height:44px;margin-bottom:12px;color:#c7c7c7}
+  .locked h3{color:var(--ink);font-size:16px;margin-bottom:6px}
+  .locked p{font-size:14px;line-height:1.45}
+  /* modal de post */
+  .ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:20;display:none;align-items:center;justify-content:center;padding:12px}
+  .ov.open{display:flex}
+  .post{background:#fff;width:100%;max-width:440px;max-height:96vh;overflow:auto;border-radius:12px}
+  .ph-head{display:flex;align-items:center;gap:10px;padding:10px 12px}
+  .ph-head .mini{width:32px;height:32px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font:700 13px Poppins}
+  .ph-head .who{flex:1;font-size:14px;font-weight:600;line-height:1.2}
+  .ph-head .who small{display:block;font-weight:400;color:var(--mut);font-size:12px}
+  .x{width:32px;height:32px;display:grid;place-items:center;border-radius:50%}
+  .x:hover{background:#f2f2f2}
+  .stage{position:relative;background:#000;aspect-ratio:4/5;overflow:hidden}
+  .stage.v{aspect-ratio:9/16;max-height:72vh;margin:0 auto}
+  .track{display:flex;height:100%;transition:transform .3s ease}
+  .slide{flex:0 0 100%;height:100%}
+  .slide img,.slide video{width:100%;height:100%;object-fit:cover;display:block}
+  .slide .ph{padding:28px}
+  .slide .ph .t{font-size:17px;-webkit-line-clamp:unset;white-space:pre-line;line-height:1.4}
+  .slide .ph .k{font-size:10px;margin-top:14px}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  .nav.l{left:8px}.nav.r{right:8px}
+  .count{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:3px 8px;border-radius:999px}
+  .dots{display:flex;justify-content:center;gap:4px;padding:10px 0 2px}
+  .dots i{width:6px;height:6px;border-radius:50%;background:#c7c7c7}
+  .dots i.on{background:var(--blue)}
+  .acts{display:flex;gap:14px;padding:6px 12px}
+  .acts svg{width:24px;height:24px}
+  .meta{padding:2px 12px 0;display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:6px;background:#f2f2f2;color:#262626}
+  .tag.warn{background:#fff3e0;color:#9a5b00}
+  .cap{padding:8px 12px 16px;font-size:14px;line-height:1.45;white-space:pre-line}
+  .cap b{font-weight:600;margin-right:4px}
+  .foot{padding:18px 16px 28px;text-align:center;font-size:11px;color:#a8a8a8}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<div class="ov" id="ov" role="dialog" aria-modal="true"><div class="post" id="post"></div></div>
+
+<script>
+const DATA = {"profile": {"handle": "fuzionrest", "name": "Fuzion", "bio": "Restaurante", "initial": "F"}, "year": 2026, "months": {"11": {"posts": [{"id": "c1", "kind": "carrossel", "label": "Carrossel 1", "title": "Há refeições que não se esquecem", "slides": ["Há refeições que não se esquecem tão depressa.\nE, muitas vezes, tudo começa com um prato que conquista logo ao primeiro olhar.", "No Fuzion, queremos que esse primeiro olhar desperte a vontade de experimentar, com pratos bem servidos e sabores que convidam a saborear cada garfada.", "Seja com os sabores do mar, uma carne grelhada ou uma receita mais tradicional, há sempre uma boa razão para se sentar à nossa mesa.", "Mas aquilo que torna a experiência especial vai além da comida, porque o ambiente, o atendimento e a companhia também fazem parte das boas memórias.", "A sua próxima boa memória pode começar aqui.\nEscolha a companhia, marque o momento e deixe que o Fuzion trate do resto.\nReserve já a sua mesa!"], "caption": "Há refeições que recordamos pelo sabor e outras que ficam na memória por tudo aquilo que vivemos à mesa.\n\nNo Fuzion, gostamos de reunir as duas coisas, com pratos que despertam o apetite, um ambiente agradável e um atendimento que faz com que se sinta bem recebido.\n\nA sua próxima experiência está à espera. Faça já a sua reserva e venha descobrir o Fuzion!", "date": null, "time": null, "media": []}, {"id": "c2", "kind": "carrossel", "label": "Carrossel 2", "title": "Para os verdadeiros apreciadores de picanha", "slides": ["Há dias em que só uma boa picanha consegue satisfazer o apetite.\nE, se é apreciador de carne, sabe exatamente do que estamos a falar.", "Imagine a picanha a chegar à mesa, com aquele aspeto suculento e o aroma irresistível de uma carne acabada de grelhar.", "Agora junte-lhe as batatas fritas, o arroz, o feijão e os restantes acompanhamentos que tornam esta experiência ainda mais completa.", "É o tipo de refeição que merece ser saboreada sem pressas, principalmente quando está à mesa com alguém que aprecia uma boa carne tanto quanto você.", "Já sabe com quem vai partilhar esta experiência?\nNo Fuzion, a picanha está à sua espera.\nReserve a sua mesa e venha saboreá-la!"], "caption": "Uma boa picanha tem tudo para transformar uma refeição num momento especial.\n\nA carne suculenta, os acompanhamentos e o prazer de saborear cada garfada fazem desta uma escolha difícil de resistir, sobretudo para quem não dispensa um bom grelhado.\n\nNo Fuzion, temos uma mesa à sua espera. Faça a sua reserva e venha experimentar a nossa picanha!", "date": null, "time": null, "media": []}, {"id": "c3", "kind": "carrossel", "label": "Carrossel 3", "title": "Os sabores do mar", "slides": ["Se os sabores do mar são a sua perdição, este carrossel vai abrir-lhe o apetite.\nE temos quase a certeza de que vai querer continuar a ver.", "Começamos pelo marisco, que conquista com os seus aromas e sabores intensos, sobretudo quando chega à mesa num prato que dá vontade de provar imediatamente.", "Para quem prefere um bom peixe, também há opções que valorizam os sabores mais tradicionais e que combinam na perfeição com uma refeição tranquila.", "E quando juntamos estes sabores a uma mesa bem preparada, um bom atendimento e tempo para apreciar a refeição, percebemos que comer fora pode ser muito mais do que matar a fome.", "O mar já fez a sua parte. Agora só falta escolher a mesa.\nVenha descobrir os sabores que preparámos para si.\nReserve já no Fuzion!"], "caption": "Há qualquer coisa de especial numa refeição inspirada nos sabores do mar, sobretudo quando os aromas chegam à mesa e despertam imediatamente o apetite.\n\nNo Fuzion, encontra opções de peixe e marisco para quem gosta de apreciar uma boa refeição com tempo e companhia.\n\nReserve a sua mesa e venha descobrir os nossos sabores do mar!", "date": null, "time": null, "media": []}, {"id": "c4", "kind": "carrossel", "label": "Carrossel 4", "title": "O seu almoço merece mais", "slides": ["Quantas vezes almoça à pressa e nem consegue aproveitar a refeição?\nEntre os compromissos e a rotina, nem sempre reservamos tempo para desfrutar de um bom almoço.", "Mas imagine trocar essa pressa por uma mesa preparada, um ambiente agradável e a oportunidade de escolher aquilo que realmente lhe apetece comer.", "Pode optar por uma carne grelhada, um prato de peixe ou uma das nossas especialidades e aproveitar o momento sem ter de se preocupar com a preparação.", "Porque, às vezes, aquilo de que precisamos para continuar bem o dia é simplesmente uma boa refeição e alguns minutos para nós.", "O seu próximo almoço merece ser assim.\nFaça uma pausa na rotina e venha desfrutar de um momento especial no Fuzion.\nReserve a sua mesa!"], "caption": "O almoço não tem de ser apenas mais uma tarefa a cumprir durante o dia.\n\nEntre o trabalho, os compromissos e a correria da rotina, também é importante encontrar tempo para desfrutar de uma refeição que realmente nos sabe bem.\n\nNo Fuzion, esperamos por si com opções para diferentes gostos e um ambiente onde pode aproveitar a sua pausa.\n\nPlaneie o seu próximo almoço e reserve já a sua mesa!", "date": null, "time": null, "media": []}, {"id": "c5", "kind": "carrossel", "label": "Carrossel 5", "title": "A sobremesa também faz parte da experiência", "slides": ["É daquelas pessoas que diz que já não consegue comer mais, mas acaba sempre por pedir sobremesa?\nEntão vai identificar-se com este momento.", "Depois de uma boa refeição, chega a altura de olhar para as sobremesas e perceber que talvez ainda exista espaço para mais um pequeno prazer.", "E quando aparece uma fatia de cheesecake, com uma cobertura generosa de frutos vermelhos, torna-se ainda mais difícil resistir.", "É a combinação perfeita entre a cremosidade do recheio, a textura da base e o sabor dos frutos vermelhos, que transforma o final da refeição num dos momentos mais esperados.", "No Fuzion, a sua refeição também merece um final delicioso.\nVenha experimentar os nossos sabores e deixe espaço para a sobremesa.\nReserve já a sua mesa!"], "caption": "Há quem escolha o restaurante pelo prato principal e há quem já esteja a pensar na sobremesa antes de começar a refeição.\n\nSe faz parte do segundo grupo, temos uma sugestão que merece a sua atenção.\n\nO nosso cheesecake de frutos vermelhos é uma excelente forma de terminar uma refeição com um toque doce.\n\nFaça a sua reserva no Fuzion e não se esqueça de guardar espaço para a sobremesa!", "date": null, "time": null, "media": []}, {"id": "c6", "kind": "carrossel", "label": "Carrossel 6", "title": "Quando ninguém consegue escolher o que comer", "slides": ["Já lhe aconteceu combinar um jantar e cada pessoa querer comer uma coisa diferente?\nHá sempre quem prefira carne, quem não dispense peixe e quem tenha vontade de pedir uma massa.", "Encontrar um restaurante que agrade a todos nem sempre é simples, principalmente quando queremos que a refeição seja uma experiência agradável para toda a mesa.", "É por isso que, no Fuzion, reunimos diferentes sabores, desde as carnes grelhadas aos pratos de peixe e marisco, sem esquecer as opções de massa.", "Assim, cada pessoa pode escolher aquilo de que mais gosta e todos podem aproveitar o que realmente importa, que é estar à mesa, conversar e desfrutar da companhia.", "Já tem a companhia. Agora só falta reservar a mesa.\nReúna os amigos ou a família e venha descobrir os sabores do Fuzion.\nFaça já a sua reserva!"], "caption": "Escolher onde jantar em grupo pode ser um desafio quando cada pessoa tem um prato preferido.\n\nNo Fuzion, encontra uma variedade de opções que permite reunir diferentes gostos à mesma mesa, desde as carnes grelhadas aos sabores do mar e aos clássicos da cozinha.\n\nPorque o mais importante é que todos desfrutem da refeição e da companhia.\n\nMarque o próximo encontro e reserve já a sua mesa no Fuzion!", "date": null, "time": null, "media": []}, {"id": "c7", "kind": "carrossel", "label": "Carrossel 7", "title": "A mesa onde vai querer voltar", "slides": ["Um bom restaurante não se escolhe apenas pelo que está no prato.\nEscolhe-se também pela forma como nos faz sentir durante a refeição.", "No Fuzion, acreditamos que um atendimento atencioso e um ambiente confortável fazem tanta diferença quanto a comida que chega à mesa.", "É por isso que gostamos de receber cada cliente com atenção e proporcionar uma experiência onde possa apreciar os nossos pratos e aproveitar a companhia.", "Quer venha para um almoço tranquilo, um jantar a dois ou um encontro com amigos, queremos que saia da nossa mesa com vontade de regressar.", "Há sempre uma boa razão para voltar ao Fuzion.\nE talvez esteja na altura de criar mais uma.\nEscolha a data e reserve já a sua mesa!"], "caption": "Há restaurantes que visitamos para experimentar um prato e outros aos quais queremos regressar pela experiência que nos proporcionam.\n\nNo Fuzion, damos importância tanto à comida como aos momentos que acontecem à volta da mesa, porque sabemos que um bom atendimento e um ambiente acolhedor também fazem parte de uma excelente refeição.\n\nQuer seja para almoçar, jantar ou celebrar uma ocasião especial, teremos todo o gosto em recebê-lo.\n\nFaça já a sua reserva e venha criar boas memórias connosco!", "date": null, "time": null, "media": []}, {"id": "r1", "kind": "reels", "label": "Reels 01", "title": "Pratos que dá vontade de provar", "slides": ["Reels 01"], "caption": "Omelete com salada fresca, peixe grelhado no ponto, camarão suculento e uma salada bem composta, cheia de cor.\nNo Fuzion, cada prato chega à mesa com sabor, frescura e aquela vontade imediata de provar.\nDifícil mesmo é escolher só um.\n\nMarque aqui quem vai almoçar consigo esta semana e reserve já a sua mesa no Fuzion. Não deixe para depois!", "date": null, "time": null, "media": []}, {"id": "r2", "kind": "reels", "label": "Reels 02", "title": "Moments at Fuzion", "slides": ["Reels 02"], "caption": "Uma mesa na esplanada, um prato bem servido e um atendimento que faz com que se sinta em casa.\n\nSão estes os momentos que se vivem no Fuzion, e são eles que fazem os nossos clientes voltar.\nMoments at Fuzion.\n\nO próximo momento pode ser o seu. Envie-nos uma mensagem e reserve já a sua mesa antes que a esplanada fique cheia!", "date": null, "time": null, "media": []}, {"id": "r3", "kind": "reels", "label": "Reels 03", "title": "Um dia no Fuzion", "slides": ["Reels 03"], "caption": "Antes de chegar à sua mesa, cada prato passa por mãos que cuidam de todos os detalhes.\n\nDa cozinha ao bar, da sala à esplanada, é assim um dia no Fuzion: produto fresco, preparado com tempo e servido com carinho.\n\nAgora que já viu como é feito, só falta provar. Reserve hoje a sua mesa e venha viver o Fuzion por dentro!", "date": null, "time": null, "media": []}, {"id": "d1", "kind": "dump", "label": "Dump 01", "title": "Omelete com salada", "slides": ["Foto 1", "Foto 2"], "caption": "Leve, saborosa e bem servida.\n\nA nossa omelete chega acompanhada de uma salada fresca e colorida, perfeita para um almoço que sabe bem sem pesar no resto do dia.\n\nO almoço de amanhã já está decidido? Reserve a sua mesa no Fuzion e venha provar!", "date": null, "time": null, "media": []}, {"id": "d2", "kind": "dump", "label": "Dump 02", "title": "Pratos que se explicam sozinhos", "slides": ["Foto 1", "Foto 2", "Foto 3"], "caption": "Há pratos que se explicam sozinhos.\n\nNo Fuzion, a fotografia abre o apetite, mas é à mesa que tudo ganha sabor.\n\nComente aqui qual destes pratos pediria primeiro e reserve já a sua mesa para provar ao vivo!", "date": null, "time": null, "media": []}, {"id": "d3", "kind": "dump", "label": "Dump 03", "title": "Sardinhas assadas", "slides": ["Foto 1", "Foto 2"], "caption": "Sardinhas assadas, batatas, pimentos e pão tostado: o clássico português que nunca falha.\n\nNo Fuzion, servimos este prato com todo o sabor da tradição, para quem sabe que há sabores que nunca saem de moda.\n\nQuem é aquela pessoa que nunca diz não a umas sardinhas? Marque-a aqui e reservem já a vossa mesa no Fuzion!", "date": null, "time": null, "media": []}], "stories": [], "note": "Teste com a LE de novembro. As subtarefas não têm data nem horário, então a ordem segue a LE (Carrosséis 1–7, Reels 1–3, Dumps 1–3)."}}, "today": "2026-11-17"};
+const MES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+const MES_N = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const DIAS = ["dom","seg","ter","qua","qui","sex","sáb"];
+const P = DATA.profile;
+const today = new Date(DATA.today+"T12:00:00");
+let month = null, tab = "posts";
+
+const I = {
+  car:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4H9a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM5 8H4v12a2 2 0 0 0 2 2h12v-1H6a1 1 0 0 1-1-1z"/></svg>',
+  reel:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm6 6v7l6-3.5z"/></svg>',
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>',
+  reels:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M3 8h18M8 3l3 5M14 3l3 5"/><path d="M10 11v6l5-3z" fill="currentColor" stroke="none"/></svg>',
+  lock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+  x:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  l:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><path d="M15 6l-6 6 6 6"/></svg>',
+  r:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.4-9.3-9A5.4 5.4 0 0 1 12 6a5.4 5.4 0 0 1 9.3 6c-2.3 4.6-9.3 9-9.3 9z"/></svg>',
+  com:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.4A8.5 8.5 0 1 1 21 12z"/></svg>',
+  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 3L9.2 10.1M22 3l-6.5 18-3.3-7.9L4 9.8z"/></svg>'
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KIND = {carrossel:"Carrossel", reels:"Reels", dump:"Photo dump", estatico:"Post estático", unico:"Post único"};
+
+function monthState(m){
+  const has = DATA.months[String(m)];
+  if (has) return "open";
+  // planejamento do mês m é enviado no dia 20 do mês anterior
+  const release = new Date(DATA.year, m-2, 20, 0, 0, 0);
+  if (today >= release) return "past";
+  return "future";
+}
+function fmtDate(p){
+  if (!p.date) return null;
+  const d = new Date(p.date+"T12:00:00");
+  return DIAS[d.getDay()]+", "+String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0");
+}
+function feedOrder(posts){
+  // feed real: mais recente primeiro. Sem data, respeita a ordem da LE (último item = mais recente).
+  const withIdx = posts.map((p,i)=>({p,i}));
+  withIdx.sort((a,b)=>{
+    if (a.p.date && b.p.date){ const k=(b.p.date+(b.p.time||"")).localeCompare(a.p.date+(a.p.time||"")); if (k) return k; }
+    return b.i - a.i;
+  });
+  return withIdx.map(x=>x.p);
+}
+function phHTML(p, idx, big){
+  const cls = p.kind==="reels" ? "ph reel" : p.kind==="dump" ? "ph dump" : "ph";
+  const txt = big ? p.slides[idx] : p.title;
+  const k = big ? (p.kind==="reels" ? "Vídeo do reels · prévia sem arquivo" : p.kind==="dump" ? "Foto do dump · prévia sem arquivo" : "Lâmina "+(idx+1)+" · prévia sem arte") : p.label;
+  return '<div class="'+cls+'"><div class="t">'+esc(txt)+'</div><div class="k">'+esc(k)+'</div></div>';
+}
+function mediaHTML(m){
+  if (m.type==="video") return '<video src="'+esc(m.src)+'" '+(m.poster?'poster="'+esc(m.poster)+'" ':'')+'playsinline controls preload="metadata"></video>';
+  return '<img src="'+esc(m.src)+'" alt="" loading="lazy">';
+}
+function tileHTML(p){
+  let inner;
+  if (p.media.length){
+    const m = p.media[0];
+    inner = m.type==="video" ? '<img src="'+esc(m.poster||"")+'" alt="">' : mediaHTML(m);
+  } else inner = phHTML(p,0,false);
+  const ico = p.kind==="reels" ? I.reel : (p.media.length>1 || (!p.media.length && p.slides.length>1)) ? I.car : "";
+  const d = fmtDate(p);
+  return '<button class="tile" data-id="'+p.id+'">'+inner+(ico?'<span class="ico">'+ico+'</span>':'')+(d?'<span class="dt">'+d+'</span>':'')+'</button>';
+}
+
+function render(){
+  const app = document.getElementById("app");
+  const mdata = DATA.months[String(month)];
+  const st = monthState(month);
+  let chips = "";
+  for (let m=1;m<=12;m++){
+    const s = monthState(m);
+    chips += '<button class="chip'+(m===month?" on":"")+(s==="open"?" has":"")+(s==="future"?" lock":"")+'" data-m="'+m+'">'+MES_N[m-1].slice(0,3).toUpperCase()+'</button>';
+  }
+  let posts = mdata ? mdata.posts : [];
+  const totalPosts = Object.values(DATA.months).reduce((a,x)=>a+x.posts.length,0);
+  let body = "";
+  if (st==="open"){
+    // feed acumulado: mês escolhido + meses anteriores abaixo
+    let list = [];
+    for (let m=month; m>=1; m--){ const md = DATA.months[String(m)]; if (md) list = list.concat(feedOrder(md.posts)); }
+    if (tab==="reels") list = list.filter(p=>p.kind==="reels");
+    const stories = mdata.stories || [];
+    const hl = stories.length
+      ? stories.map(s=>'<button class="s" data-story="'+s.id+'"><div class="ring"><div>'+esc(s.day)+'</div></div><div>'+esc(s.label||"")+'</div></button>').join("")
+      : '<div class="empty">Sem stories planejados em '+MES_N[month-1].toLowerCase()+'.</div>';
+    body = (mdata.note?'<div class="note">'+esc(mdata.note)+'</div>':'')+
+      '<div class="hl">'+hl+'</div>'+
+      '<div class="tabs"><button data-tab="posts" class="'+(tab==="posts"?"on":"")+'" aria-label="Posts">'+I.grid+'</button><button data-tab="reels" class="'+(tab==="reels"?"on":"")+'" aria-label="Reels">'+I.reels+'</button></div>'+
+      '<div class="grid">'+list.map(tileHTML).join("")+'</div>';
+  } else if (st==="future"){
+    const prev = MES_N[(month+10)%12].toLowerCase();
+    body = '<div class="locked">'+I.lock+'<h3>'+MES_N[month-1]+' ainda não foi liberado</h3><p>O planejamento deste mês é enviado no dia 20 de '+prev+'.</p></div>';
+  } else {
+    body = '<div class="locked">'+I.lock+'<h3>Sem prévia para '+MES_N[month-1].toLowerCase()+'</h3><p>Este mês não tem planejamento nesta visualização.</p></div>';
+  }
+  app.innerHTML =
+    '<div class="months"><div class="yr"><span>Planejamento '+DATA.year+'</span><span>Toque no mês</span></div><div class="chips">'+chips+'</div></div>'+
+    '<div class="bar"><h1>'+esc(P.handle)+'</h1></div>'+
+    '<div class="prof"><div class="avatar"><div>'+esc(P.initial)+'</div></div><div class="stats"><div><b>'+totalPosts+'</b><span>posts</span></div><div><b>—</b><span>seguidores</span></div><div><b>—</b><span>seguindo</span></div></div></div>'+
+    '<div class="bio"><b>'+esc(P.name)+'</b>'+esc(P.bio)+'</div>'+ body +
+    '<div class="foot">Prévia de planejamento · as publicações ainda não estão no ar</div>';
+  app.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{month=+b.dataset.m; tab="posts"; try{history.replaceState(null,"","#"+MES[month-1])}catch(e){location.hash=MES[month-1]} render(); window.scrollTo(0,0);});
+  app.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{tab=b.dataset.tab; render();});
+  app.querySelectorAll(".tile").forEach(b=>b.onclick=()=>openPost(b.dataset.id));
+  const on = app.querySelector(".chip.on"); if (on) on.scrollIntoView({inline:"center",block:"nearest"});
+}
+
+function findPost(id){ for (const k in DATA.months){ const p = DATA.months[k].posts.find(x=>x.id===id); if (p) return p; } }
+function openPost(id){
+  const p = findPost(id); if (!p) return;
+  const items = p.media.length ? p.media.map(m=>({m})) : p.slides.map((s,i)=>({i}));
+  const vertical = p.kind==="reels";
+  const slides = items.map(it=>'<div class="slide">'+(it.m?mediaHTML(it.m):phHTML(p,it.i,true))+'</div>').join("");
+  const n = items.length;
+  const d = fmtDate(p);
+  const when = d ? 'Publicação: '+d+(p.time?' às '+p.time:'') : 'Data e horário: não informados na LE';
+  const missing = !p.media.length;
+  const el = document.getElementById("post");
+  el.innerHTML =
+    '<div class="ph-head"><div class="mini">'+esc(P.initial)+'</div><div class="who">'+esc(P.handle)+'<small>'+esc(p.label)+' · '+esc(p.title)+'</small></div><button class="x" id="cl" aria-label="Fechar">'+I.x+'</button></div>'+
+    '<div class="stage'+(vertical?" v":"")+'"><div class="track" id="tr">'+slides+'</div>'+
+      (n>1?'<button class="nav l" id="pv" aria-label="Anterior">'+I.l+'</button><button class="nav r" id="nx" aria-label="Próxima">'+I.r+'</button><div class="count" id="ct">1/'+n+'</div>':'')+
+    '</div>'+
+    (n>1?'<div class="dots" id="dt">'+items.map((_,i)=>'<i class="'+(i?"":"on")+'"></i>').join("")+'</div>':'')+
+    '<div class="acts">'+I.heart+I.com+I.send+'</div>'+
+    '<div class="meta"><span class="tag">'+esc(KIND[p.kind]||p.kind)+(p.kind!=="reels"?' · '+n+(p.kind==="dump"?' fotos':' lâminas'):'')+'</span><span class="tag'+(d?'':' warn')+'">'+esc(when)+'</span>'+(missing?'<span class="tag warn">Arte ainda não carregada</span>':'')+'</div>'+
+    '<div class="cap"><b>'+esc(P.handle)+'</b>'+esc(p.caption)+'</div>';
+  let k=0;
+  const go = j=>{ k=Math.max(0,Math.min(n-1,j)); document.getElementById("tr").style.transform="translateX("+(-100*k)+"%)";
+    const ct=document.getElementById("ct"); if(ct) ct.textContent=(k+1)+"/"+n;
+    const dt=document.getElementById("dt"); if(dt) [...dt.children].forEach((x,i)=>x.className=i===k?"on":"");
+    el.querySelectorAll("video").forEach((v,i)=>{ if(i!==k) try{v.pause()}catch(e){} }); };
+  if (n>1){ document.getElementById("pv").onclick=()=>go(k-1); document.getElementById("nx").onclick=()=>go(k+1);
+    let sx=null; const tr=document.getElementById("tr");
+    tr.addEventListener("touchstart",e=>{sx=e.touches[0].clientX},{passive:true});
+    tr.addEventListener("touchend",e=>{ if(sx==null) return; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) go(k+(dx<0?1:-1)); sx=null; }); }
+  document.getElementById("cl").onclick=closePost;
+  document.getElementById("ov").classList.add("open");
+}
+function closePost(){ const ov=document.getElementById("ov"); ov.classList.remove("open"); ov.querySelectorAll("video").forEach(v=>{try{v.pause()}catch(e){}}); }
+document.getElementById("ov").addEventListener("click",e=>{ if(e.target.id==="ov") closePost(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closePost(); });
+
+function fromHash(){
+  const h = (location.hash||"").replace("#","");
+  const i = MES.indexOf(h);
+  if (i>=0) return i+1;
+  // padrão: mês mais recente com conteúdo
+  const ks = Object.keys(DATA.months).map(Number).sort((a,b)=>b-a);
+  return ks.length ? ks[0] : today.getMonth()+1;
+}
+month = fromHash();
+window.addEventListener("hashchange",()=>{ month=fromHash(); render(); });
+render();
+</script>
+</body>
+</html>
