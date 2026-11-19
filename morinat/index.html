@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morinat · Grade do Instagram</title>
+<style>
+:root{--bg:#fff;--fg:#000;--muted:#737373;--line:#dbdbdb;--soft:#efefef;--blue:#0095f6}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fafafa;color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.app{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;border-left:1px solid var(--soft);border-right:1px solid var(--soft)}
+/* month picker */
+.months{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--soft);padding:10px 0 8px}
+.months .yr{font-size:11px;font-weight:600;color:var(--muted);text-align:center;letter-spacing:.08em;margin-bottom:6px}
+.mrow{display:flex;gap:6px;overflow-x:auto;padding:0 12px;scrollbar-width:none}
+.mrow::-webkit-scrollbar{display:none}
+.mbtn{flex:0 0 auto;font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;background:var(--soft);color:#262626;display:flex;align-items:center;gap:4px}
+.mbtn.on{background:#000;color:#fff}
+.mbtn.lock{color:#a8a8a8}
+.mbtn svg{width:11px;height:11px}
+/* header */
+.top{display:flex;align-items:center;justify-content:center;height:44px;font-weight:700;font-size:16px;gap:4px}
+.prof{display:flex;align-items:center;gap:22px;padding:6px 16px 0}
+.avatar{width:86px;height:86px;border-radius:50%;flex:0 0 auto;padding:3px;background:var(--line)}
+.avatar .in{width:100%;height:100%;border-radius:50%;border:3px solid #fff;background:#fdf3f6 center/cover no-repeat}
+.logo{background:linear-gradient(135deg,#d7e8fb,#7fb2ee)!important;display:grid;place-items:center;color:#fff;font-weight:800}
+.avatar .logo::after{content:"M";font-size:34px}
+.mini.logo::after,.svh .logo::after{content:"M";font-size:13px}
+.actions .fol{background:var(--blue);color:#fff}
+.hli.fix{cursor:default;pointer-events:none}
+.hli{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hli .ring{margin-bottom:4px}
+.hli.fix .ring{background:var(--line)}
+.cell.pub .ico{top:7px}
+.stats{flex:1;display:flex;justify-content:space-around;text-align:center}
+.stats b{display:block;font-size:17px}
+.stats span{font-size:13px;color:#262626}
+.bio{padding:12px 16px 0;font-size:14px;line-height:1.35}
+.bio .nm{font-weight:600}
+.bio .cat{color:var(--muted)}
+.actions{display:flex;gap:6px;padding:12px 16px 4px}
+.actions div{flex:1;background:var(--soft);border-radius:8px;text-align:center;font-size:14px;font-weight:600;padding:7px 0}
+/* highlights */
+.hl{display:flex;gap:16px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none}
+.hl::-webkit-scrollbar{display:none}
+.hli{flex:0 0 auto;width:66px;text-align:center;font-size:12px}
+.hli .ring{width:66px;height:66px;border-radius:50%;padding:2px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf)}
+.hli .ring div{width:100%;height:100%;border-radius:50%;border:3px solid #fff;background:#eee center/cover}
+/* tabs */
+.tabs{display:flex;border-top:1px solid var(--soft);margin-top:10px}
+.tab{flex:1;display:flex;justify-content:center;padding:10px 0;color:#a8a8a8;border-bottom:1px solid transparent}
+.tab.on{color:#000;border-bottom-color:#000}
+.tab svg{width:24px;height:24px}
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.cell{position:relative;aspect-ratio:3/4;background:var(--soft);overflow:hidden}
+.cell img{width:100%;height:100%;object-fit:cover;display:block}
+.cell .ico{position:absolute;top:7px;right:7px;width:20px;height:20px;color:#fff;filter:drop-shadow(0 0 2px rgba(0,0,0,.45))}
+.cell .dt{position:absolute;left:6px;bottom:6px;font-size:11px;font-weight:600;color:#fff;background:rgba(0,0,0,.45);padding:2px 6px;border-radius:4px}
+.cell.wip{background:#e0e0e0;display:grid;place-items:center;text-align:center;color:#757575;font-size:12px;font-weight:600;padding:8px}
+.msep{grid-column:1/-1;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;padding:10px 12px 6px;background:#fff}
+.empty{padding:48px 28px;text-align:center;color:var(--muted);font-size:14px;line-height:1.5}
+.empty svg{width:44px;height:44px;margin-bottom:10px;color:#c7c7c7}
+.foot{padding:22px 16px 40px;text-align:center;color:#a8a8a8;font-size:11px}
+/* post modal */
+.ov{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center}
+.ov.on{display:flex}
+.post{background:#fff;width:100%;max-width:480px;max-height:100%;overflow-y:auto;border-radius:0}
+@media(min-width:520px){.post{border-radius:10px;max-height:94vh}}
+.ph{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.ph .mini{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ffb26b,#ff7a59 55%,#f06292);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+.ph .who{flex:1;font-size:14px;font-weight:600;line-height:1.2}
+.ph .who small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.ph .x{width:32px;height:32px;display:grid;place-items:center}
+.ph .x svg{width:22px;height:22px}
+.car{position:relative;background:#000}
+.track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;aspect-ratio:4/5;background:#f2f2f2}
+.slide img{width:100%;height:100%;object-fit:contain;display:block;background:#fff}
+.slide.wip{display:grid;place-items:center;color:#757575;font-weight:600;background:#e0e0e0}
+.arr{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.88);display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.arr svg{width:14px;height:14px}
+.arr.l{left:10px}.arr.r{right:10px}
+.arr[hidden]{display:none}
+.cnt{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px}
+.dots{display:flex;justify-content:center;gap:4px;padding:10px 0 2px;min-height:20px}
+.dots i{width:6px;height:6px;border-radius:50%;background:#c7c7c7}
+.dots i.on{background:var(--blue)}
+.pb{padding:4px 14px 18px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.chip{font-size:12px;font-weight:600;background:var(--soft);border-radius:6px;padding:4px 8px}
+.chip.pub{background:#fff4e5;color:#8a4b00}
+.cap{font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+.cap b{font-weight:600}
+/* stories */
+.sv{position:fixed;inset:0;z-index:30;background:#000;display:none;color:#fff}
+.sv.on{display:block}
+.svin{position:relative;max-width:480px;height:100%;margin:0 auto}
+.bars{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:3px;z-index:2}
+.bars i{flex:1;height:2px;background:rgba(255,255,255,.35);border-radius:2px;overflow:hidden}
+.bars i b{display:block;height:100%;width:0;background:#fff}
+.svh{position:absolute;top:20px;left:12px;right:12px;display:flex;align-items:center;gap:8px;z-index:2;font-size:13px;font-weight:600}
+.svh small{font-weight:400;opacity:.8}
+.svh .x{margin-left:auto}
+.svh .x svg{width:24px;height:24px}
+.svimg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.svimg img{max-width:100%;max-height:100%}
+.svint{position:absolute;left:16px;right:16px;bottom:28px;background:rgba(255,255,255,.95);color:#000;border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;text-align:center;z-index:2}
+.svnav{position:absolute;inset:0;display:flex;z-index:1}
+.svnav div{flex:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="months">
+    <div class="yr">TOQUE NO MÊS PARA VER O PERFIL NO FIM DELE</div>
+    <div class="mrow" id="months"></div>
+  </div>
+  <div class="top">morinat_vet</div>
+  <div class="prof">
+    <div class="avatar"><div class="in logo"></div></div>
+    <div class="stats">
+      <div><b id="nposts">—</b><span>posts</span></div>
+      <div><b>—</b><span>seguidores</span></div>
+      <div><b>—</b><span>seguindo</span></div>
+    </div>
+  </div>
+  <div class="bio">
+    <div class="nm">Clínica Veterinária Morinat</div>
+    <div>💙 Cuidamos do seu melhor amigo com amor e dedicação<br>🐾 Consultas, cirurgias, exames e mais!<br>☎️(15)33211558 | (15)996872160<br>👇🏻 Entre em contato:<br>www.morinat.com.br</div>
+  </div>
+  <div class="actions"><div class="fol">Seguir</div><div>Mensagem</div><div>Contato</div></div>
+  <div class="hl" id="hl"></div>
+  <div class="tabs">
+    <button class="tab on" data-tab="posts" aria-label="Posts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></button>
+    <button class="tab" data-tab="reels" aria-label="Reels"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M3 8h18M8 3l3 5M14 3l3 5"/><path d="M10 11.5v5l4.5-2.5z" fill="currentColor" stroke="none"/></svg></button>
+  </div>
+  <div id="feed"></div>
+  <div class="foot">Prévia do planejamento. As artes e legendas podem receber ajustes antes da publicação.</div>
+</div>
+
+<div class="ov" id="ov">
+  <div class="post" role="dialog" aria-modal="true">
+    <div class="ph">
+      <div class="mini logo"></div>
+      <div class="who">morinat_vet<small>Sorocaba, SP</small></div>
+      <button class="x" id="close" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="car">
+      <div class="track" id="track"></div>
+      <button class="arr l" id="prev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="arr r" id="next" aria-label="Próxima"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg></button>
+      <div class="cnt" id="cnt"></div>
+    </div>
+    <div class="dots" id="dots"></div>
+    <div class="pb">
+      <div class="meta" id="meta"></div>
+      <div class="cap" id="cap"></div>
+    </div>
+  </div>
+</div>
+
+<div class="sv" id="sv">
+  <div class="svin">
+    <div class="bars" id="bars"></div>
+    <div class="svh"><div class="logo" style="width:28px;height:28px;border-radius:50%"></div>
+      <div>morinat_vet <small id="svwhen"></small></div>
+      <button class="x" id="svclose" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="svimg" id="svimg"></div>
+    <div class="svint" id="svint" hidden></div>
+    <div class="svnav"><div id="svp"></div><div id="svn"></div></div>
+  </div>
+</div>
+
+<script type="application/json" id="dados-meses">{"202612": [{"d": "2026-12-01", "t": "10h", "f": "Carrossel", "n": 4, "cap": "Dezembro chega com festa, viagem, casa cheia e rotina diferente. E, infelizmente, também chega com um aumento nos casos de abandono de animais. 💚\n\nPor isso existe o Dezembro Verde, campanha que lembra que um pet não é um compromisso de temporada: ele depende de nós todos os dias do ano, inclusive nos feriados, nas férias e nas semanas em que tudo está corrido.\n\nA boa notícia é que quase todo problema de fim de ano tem solução com planejamento. Vai viajar? Pense antes com quem seu pet vai ficar. Casa cheia de visita? Reserve um cantinho tranquilo para ele. Mudança na rotina? Converse com alguém antes de tomar qualquer decisão por impulso.\n\nNeste mês vamos falar sobre ceia, fogos, calor e cuidados para as festas serem tranquilas para todos da casa, de duas e de quatro patas.\n\nSalve este post e compartilhe com quem tem um pet em casa."}, {"d": "2026-12-03", "t": "10h", "f": "Post único", "n": 1, "cap": "A gente achou essa carta embaixo da cama de um paciente. 🎅\n\nO pedido número 3 a gente já sabe que o veterinário não aprova, mas a carta é deles, não interfere.\n\nBrincadeiras à parte, o que todo pet pede mesmo é tempo com a família, e o fim de ano é uma ótima época para isso. Menos pressa, mais passeio, mais colo.\n\nE aí, o que o seu pet escreveria na carta dele? Conta nos comentários o pedido que não pode faltar.\n\nMarque o tutor que já sabe exatamente o que o pet pediria."}, {"d": "2026-12-08", "t": "10h", "f": "Carrossel", "n": 4, "cap": "A mesa da ceia cheia, a família reunida e aquele pet com olhar de quem não come há três dias. A gente conhece bem essa cena. 😄\n\nSó que muita coisa que faz parte da festa não combina com o organismo do pet. Chocolate, uva e uva-passa, cebola, alho, ossos cozidos e comidas muito gordurosas estão entre os alimentos que merecem atenção em cães e gatos.\n\nUm combinado simples ajuda: avise as visitas que o pet não recebe comida da mesa, mantenha restos e embalagens fora do alcance e use o lixo com tampa. Se quiser incluir o seu pet na comemoração, o médico-veterinário pode indicar opções adequadas ao seu animal.\n\nSe seu pet comeu algo que não deveria, não espere aparecer sintoma e não tente provocar vômito por conta própria. Procure atendimento veterinário e informe o que e quanto foi ingerido.\n\nSalve este post e mostre para as visitas na hora da ceia."}, {"d": "2026-12-10", "t": "10h", "f": "Post único", "n": 1, "cap": "Hoje é o Dia Internacional dos Direitos dos Animais, uma data que a gente gosta de viver na prática, e não só de lembrar no calendário.\n\nPara a Morinat, respeitar os animais começa no atendimento: ouvir o tutor, explicar com clareza o que está acontecendo e tratar cada paciente como único. Cada pet que passa por aqui tem uma história, e a gente se importa com todas elas.\n\nNo Dezembro Verde, esse compromisso ganha um significado ainda maior: lembrar que o cuidado com o pet não muda com a estação do ano, a viagem ou a rotina das festas. Ele vale todos os dias.\n\nSe você compartilha dessa ideia, marque alguém que cuida do pet com a mesma dedicação."}, {"d": "2026-12-15", "t": "10h", "f": "Carrossel", "n": 4, "cap": "Para muita gente, fogos significam comemoração. Para muitos pets, significam susto, tremedeira, fuga e até mal-estar.\n\nPor isso, a hora de se preparar é antes: o Natal e o Réveillon estão chegando e vale organizar a casa com antecedência. Um cantinho tranquilo, janelas e portões bem fechados, identificação atualizada na coleira e a companhia de alguém da família já ajudam bastante.\n\nEvite passear com o pet no horário dos fogos e não deixe o animal preso do lado de fora. Se ele costuma sofrer muito com barulho, converse com o médico-veterinário com antecedência. Ele avalia o caso do seu pet e orienta o que fazer. Não use medicamentos por conta própria, nem os que foram indicados para outro animal.\n\nSalve este post para consultar na semana das festas e compartilhe com a sua vizinhança."}, {"d": "2026-12-17", "t": "10h", "f": "Post único", "n": 1, "cap": "A semana antes do Natal passa voando, e aquela dúvida que ficou guardada vira urgência na véspera. 😅\n\nSe o seu pet se assusta com fogos, vai viajar com a família, vai ficar com outra pessoa durante as festas ou já está com algum cuidado em andamento, esta é a hora de conversar com o médico-veterinário. Na consulta, a equipe da Morinat avalia o seu pet, escuta a sua rotina e orienta o que faz sentido para o caso dele, sem fórmulas prontas.\n\nSe precisar de algum medicamento de uso contínuo durante as férias, confira com antecedência. Fale com a equipe para saber o que a farmácia veterinária da clínica tem disponível.\n\nA Morinat fica na Rua Barão de Cotegipe, 1066, Vila Leão, em Sorocaba. Chame a gente e organize o cuidado do seu pet antes das festas."}, {"d": "2026-12-22", "t": "10h", "f": "Post único", "n": 1, "cap": "Tem gato que escala, tem cachorro que derruba e tem os que agem como se a árvore fosse brinquedo novo. 🎄😹\n\nEnfeite que some, bolinha rolando pela casa, pisca-pisca puxado. Todo tutor tem uma história para contar, e a gente adora ler as de vocês.\n\nUm lembrete rápido, brincadeiras à parte: fios, bolinhas quebráveis, fitas e enfeites pequenos não são brinquedo. Se o seu pet engolir algum deles, procure atendimento veterinário.\n\nConta nos comentários: a árvore da sua casa sobreviveu até aqui? E quem foi o responsável?"}, {"d": "2026-12-24", "t": "10h", "f": "Post único", "n": 1, "cap": "Neste Natal, a equipe da Morinat agradece a cada tutor que confiou a saúde do seu pet à nossa clínica ao longo do ano.\n\nCada consulta, cada dúvida tirada e cada história compartilhada fazem parte do nosso trabalho, e é uma honra acompanhar de perto a rotina dessas famílias.\n\nDesejamos a você e ao seu pet um Natal tranquilo, com carinho, boa companhia e muito sossego. Lembre-se dos cuidados que conversamos neste mês: ceia segura, ambiente calmo para os fogos e muito colo.\n\nFeliz Natal! 🎄💚"}, {"d": "2026-12-29", "t": "10h", "f": "Carrossel", "n": 4, "cap": "O verão começou, e com ele vem o calor, o passeio na praia ou na chácara, a piscina e a rotina de férias. Mas o pet usa o corpo de um jeito diferente do nosso: ele não transpira como a gente e perde calor principalmente pela respiração e pelas patas.\n\nPor isso, vale redobrar a atenção: água fresca à vontade, sombra, passeios nos horários mais frescos e cuidado com o asfalto e a areia quente. Nunca deixe o pet dentro do carro, nem por pouco tempo. Cães de focinho curto e animais idosos ou filhotes merecem atenção ainda maior.\n\nSe notar respiração muito acelerada, baba em excesso, fraqueza ou prostração, leve o pet para a sombra, ofereça água e procure atendimento veterinário imediatamente.\n\nE não esqueça: o Réveillon está aí. Mantenha o cantinho seguro e a identificação do seu pet em dia.\n\nSalve este post para consultar durante as férias."}, {"d": "2026-12-31", "t": "10h", "f": "Post único", "n": 1, "cap": "Todo ano a gente faz uma lista: começar a academia, beber mais água, organizar a casa. Que tal incluir na lista a saúde do seu pet? 🥂\n\nA consulta de rotina é o jeito mais simples de acompanhar como ele está: o médico-veterinário avalia o estado geral, confere vacinas, conversa sobre alimentação e comportamento e indica exames quando necessário, de acordo com a idade e o histórico de cada pet.\n\nDeixar tudo organizado logo no começo do ano evita aquela corrida de última hora quando algo muda ou uma vacina vence. E, em 2027, a gente quer continuar acompanhando a sua história com o seu pet.\n\nA Morinat deseja a você e ao seu pet um ano novo cheio de saúde, passeios e finais felizes.\n\nChame a gente para agendar a primeira consulta de 2027."}]}</script>
+<script>
+const IMG = {};
+const B = id => IMG[id] || "";
+/* Meses com planejamento enviado (último mês enviado define o que é futuro) */
+/* Meses da grade: de dez/2026 em diante. LAST_SENT = último mês já enviado (AAAAMM) */
+const FIRST = 202612, LAST_SENT = 202612, LAST_SHOWN = 202712;
+const MONTHS = ["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
+const WD = ["dom","seg","ter","qua","qui","sex","sáb"];
+
+const DADOS = JSON.parse(document.getElementById("dados-meses").textContent);
+const POSTS = Object.keys(DADOS).sort().flatMap(k => DADOS[k].map(p => ({d:p.d,t:p.t,f:p.f,s:[],cap:p.cap})));
+/* Stories: {d, t, telas:[{img|null, txt}], interacao} — nenhum previsto em dez/2026 */
+const STORIES = [];
+/* Destaques fixos que já existem no perfil */
+const HIGHLIGHTS = [["Rotina", ""], ["cirurgias", ""], ["Vacinas", ""], ["Nenêns", ""], ["Vacinas", ""], ["Finais felizes🥹", ""], ["Atendimentos 💙", ""], ["Serviços", ""], ["Localização", ""], ["Horários", ""]];
+/* Grade mostra só os conteúdos planejados (sem posts já publicados) */
+const PUBLISHED = [];
+
+const $ = id => document.getElementById(id);
+const pd = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); };
+const dd = s => { const x = pd(s); return String(x.getDate()).padStart(2,"0") + "/" + String(x.getMonth()+1).padStart(2,"0"); };
+const pubTxt = p => `Publicação: ${WD[pd(p.d).getDay()]}, ${dd(p.d)} às ${p.t}`;
+const isCar = p => p.s.length > 1 || /carrossel/i.test(p.f);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let month = LAST_SENT, tab = "posts";
+const mk = s => { const x = pd(s); return x.getFullYear()*100 + x.getMonth()+1; };
+const mlist = () => { const o=[]; for (let k=FIRST; k<=LAST_SHOWN; k = (k%100===12) ? (Math.floor(k/100)+1)*100+1 : k+1) o.push(k); return o; };
+const mname = k => MONTHS[k%100-1] + "/" + String(Math.floor(k/100)).slice(2);
+
+const ICAR = '<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h11a3 3 0 013 3v11h-2V6a1 1 0 00-1-1H7z"/><rect x="3" y="7" width="14" height="14" rx="2"/></svg>';
+const IREEL = '<svg class="ico" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const ILOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>';
+
+function renderMonths(){
+  $("months").innerHTML = mlist().map(n => {
+    const lock = n > LAST_SENT;
+    return `<button class="mbtn${n===month?" on":""}${lock?" lock":""}" data-m="${n}">${lock?ILOCK:""}${mname(n)}</button>`;
+  }).join("");
+  const on = $("months").querySelector(".on"); if (on){ const r=$("months"); r.scrollLeft = on.offsetLeft - r.offsetLeft - (r.clientWidth - on.offsetWidth)/2; }
+}
+function visiblePosts(){ return POSTS.filter(p => mk(p.d) <= month).sort((a,b) => pd(b.d) - pd(a.d)); }
+function render(){
+  renderMonths();
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.dataset.tab === tab));
+  const feed = $("feed");
+  if (month > LAST_SENT){
+    $("nposts").textContent = "—"; $("hl").innerHTML = "";
+    feed.innerHTML = `<div class="empty">${ILOCK}<div><b>${mname(month)} ainda não liberado</b></div><div>O planejamento deste mês é enviado no dia 20 do mês anterior.</div></div>`;
+    return;
+  }
+  const vp = visiblePosts();
+  const pub = PUBLISHED.filter(p => mk(p.d) <= month);
+  $("nposts").textContent = "—";
+  const st = STORIES.filter(s => mk(s.d) === month);
+  $("hl").innerHTML = st.map(s => `<button class="hli" data-st="${STORIES.indexOf(s)}"><div class="ring"><div style="${s.telas[0]&&s.telas[0].img?`background-image:url(${B(s.telas[0].img)})`:""}"></div></div>${dd(s.d)}</button>`).join("")
+    + HIGHLIGHTS.map(([n,img]) => `<div class="hli fix"><div class="ring"><div></div></div>${n}</div>`).join("");
+  const list = tab === "reels" ? vp.filter(p => /reels/i.test(p.f)) : vp;
+  const plist = tab === "reels" ? pub.filter(p => p.k === "reel") : pub;
+  if (!list.length && !plist.length){
+    feed.innerHTML = `<div class="empty">${tab==="reels" ? "Nenhum reels até este mês." : "Este mês não tem conteúdos nesta grade."}</div>`;
+    return;
+  }
+  let html = '<div class="grid">';
+  list.forEach(p => {
+    const i = POSTS.indexOf(p);
+    if (!p.s.length || !p.s[0]) html += `<button class="cell wip" data-p="${i}">Arte em produção<br>${dd(p.d)}</button>`;
+    else html += `<button class="cell" data-p="${i}"><img loading="lazy" src="${B(p.s[0])}" alt="Post de ${dd(p.d)}">${/reels/i.test(p.f)?IREEL:isCar(p)?ICAR:""}<span class="dt">${dd(p.d)}</span></button>`;
+  });
+  plist.forEach(p => {
+    html += `<button class="cell pub" data-pub="${PUBLISHED.indexOf(p)}"><img loading="lazy" src="${B(p.img)}" alt="Post publicado em ${dd(p.d)}">${p.k==="reel"?IREEL:p.k==="car"?ICAR:""}</button>`;
+  });
+  feed.innerHTML = html + "</div>";
+}
+function openPub(i){
+  const p = PUBLISHED[i];
+  $("track").innerHTML = `<div class="slide"><img src="${B(p.img)}" alt=""></div>`;
+  $("dots").innerHTML = "";
+  $("meta").innerHTML = `<span class="chip">Já publicado em ${dd(p.d)}</span><span class="chip">${p.k==="reel"?"Reels":p.k==="car"?"Carrossel":"Post único"}</span>`;
+  $("cap").textContent = "Post já publicado.";
+  idx = 0; $("ov").classList.add("on"); document.body.style.overflow = "hidden"; upd();
+}
+
+/* post modal */
+let cur = null, idx = 0;
+function openPost(i){
+  cur = POSTS[i]; idx = 0;
+  const sl = cur.s.length ? cur.s : [null];
+  $("track").innerHTML = sl.map(id => id ? `<div class="slide"><img src="${B(id)}" alt=""></div>` : `<div class="slide wip">Arte em produção</div>`).join("");
+  $("dots").innerHTML = sl.length > 1 ? sl.map((_,k) => `<i${k?"":' class="on"'}></i>`).join("") : "";
+  $("meta").innerHTML = `<span class="chip pub">${pubTxt(cur)}</span><span class="chip">${cur.f}${sl.length>1?` · ${sl.length} lâminas`:""}</span>`;
+  $("cap").innerHTML = `<b>morinat_vet</b> ${esc(cur.cap)}`;
+  $("ov").classList.add("on"); document.body.style.overflow = "hidden";
+  $("track").scrollLeft = 0; upd();
+}
+function upd(){
+  const n = $("track").children.length;
+  $("prev").hidden = idx <= 0; $("next").hidden = idx >= n-1;
+  $("cnt").textContent = `${idx+1}/${n}`; $("cnt").style.display = n > 1 ? "" : "none";
+  [...$("dots").children].forEach((d,k) => d.classList.toggle("on", k === idx));
+}
+function go(k){ const t = $("track"); idx = Math.max(0, Math.min(t.children.length-1, k)); t.scrollTo({left: idx * t.clientWidth, behavior:"smooth"}); upd(); }
+$("track").addEventListener("scroll", () => { const t = $("track"); const k = Math.round(t.scrollLeft / t.clientWidth); if (k !== idx){ idx = k; upd(); } }, {passive:true});
+$("prev").onclick = () => go(idx-1);
+$("next").onclick = () => go(idx+1);
+function closePost(){ $("ov").classList.remove("on"); document.body.style.overflow = ""; }
+$("close").onclick = closePost;
+$("ov").addEventListener("click", e => { if (e.target === $("ov")) closePost(); });
+
+/* stories viewer */
+let sv = null, si = 0, tmr = null;
+function openStory(i){ sv = STORIES[i]; si = 0; $("sv").classList.add("on"); document.body.style.overflow = "hidden"; showStory(); }
+function showStory(){
+  clearTimeout(tmr);
+  const tl = sv.telas[si];
+  $("bars").innerHTML = sv.telas.map((_,k) => `<i><b style="width:${k<si?100:0}%"></b></i>`).join("");
+  $("svwhen").textContent = `· ${WD[pd(sv.d).getDay()]}, ${dd(sv.d)} às ${sv.t}`;
+  $("svimg").innerHTML = tl.img ? `<img src="${B(tl.img)}" alt="">` : `<div style="padding:24px;text-align:center;font-size:18px;font-weight:600">${tl.txt?esc(tl.txt):"Arte em produção"}</div>`;
+  const it = tl.interacao || (si === sv.telas.length-1 ? sv.interacao : "");
+  $("svint").hidden = !it; $("svint").textContent = it ? "Interação prevista: " + it : "";
+  const bar = $("bars").children[si].firstElementChild;
+  requestAnimationFrame(() => { bar.style.transition = "width 5s linear"; bar.style.width = "100%"; });
+  tmr = setTimeout(() => stNext(), 5000);
+}
+function stNext(){ if (si < sv.telas.length-1){ si++; showStory(); } else closeStory(); }
+function stPrev(){ if (si > 0){ si--; showStory(); } }
+function closeStory(){ clearTimeout(tmr); $("sv").classList.remove("on"); document.body.style.overflow = ""; }
+$("svn").onclick = stNext; $("svp").onclick = stPrev; $("svclose").onclick = closeStory;
+
+document.addEventListener("keydown", e => {
+  if ($("ov").classList.contains("on")){ if (e.key==="ArrowRight") go(idx+1); if (e.key==="ArrowLeft") go(idx-1); if (e.key==="Escape") closePost(); }
+  else if ($("sv").classList.contains("on")){ if (e.key==="ArrowRight") stNext(); if (e.key==="ArrowLeft") stPrev(); if (e.key==="Escape") closeStory(); }
+});
+document.addEventListener("click", e => {
+  const m = e.target.closest(".mbtn"); if (m){ month = +m.dataset.m; render(); return; }
+  const t = e.target.closest(".tab"); if (t){ tab = t.dataset.tab; render(); return; }
+  const c = e.target.closest(".cell"); if (c){ if (c.dataset.pub !== undefined) openPub(+c.dataset.pub); else openPost(+c.dataset.p); return; }
+  const h = e.target.closest(".hli[data-st]"); if (h){ openStory(+h.dataset.st); }
+});
+render();
+
+</script>
+</body>
+</html>
