@@ -204,7 +204,7 @@ const STORIES = [];
 const HIGHLIGHTS = [["Clientes","HL1"],["Influencers","HL2"]];
 
 const $ = id => document.getElementById(id);
-document.querySelectorAll(".logo").forEach(el => { if (okId(LOGO)) el.style.backgroundImage = `url(${B(LOGO)})`; });
+document.querySelectorAll(".logo").forEach(el => { if (IMG[LOGO]) el.style.backgroundImage = `url(${B(LOGO)})`; });
 const pd = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); };
 const dd = s => { const x = pd(s); return String(x.getDate()).padStart(2,"0") + "/" + String(x.getMonth()+1).padStart(2,"0"); };
 const pubTxt = p => `Publicação: ${WD[pd(p.d).getDay()]}, ${dd(p.d)} às ${p.t}`;
