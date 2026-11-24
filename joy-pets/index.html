@@ -187,6 +187,7 @@ function renderChips(){
   const c=document.getElementById('chips'); c.innerHTML='';
   for(let m=0;m<12;m++){
     const k=key(year,m), st=state(k);
+    if(st==='before') continue;
     const b=document.createElement('button');
     b.className='chip'+(k===selKey?' on':'')+(st==='future'?' lock':'')+(st==='before'?' off':'');
     b.innerHTML=(st==='future'?ICO.lock:'')+MN[m];
