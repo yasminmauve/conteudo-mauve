@@ -94,6 +94,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .chip.pub{background:#fff4e5;color:#8a4b00}
 .cap{font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
 .cap b{font-weight:600}
+.rot{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 14px;background:#fafafa;font-size:13px;line-height:1.45}
+.rot h4{margin:0 0 8px;font-size:13px;letter-spacing:.04em}
+.rot .k{font-weight:600}
+.rot ol{margin:8px 0 0;padding-left:20px}
+.rot li{margin:0 0 6px}
 .lang{display:flex;gap:6px;margin:0 0 8px}
 .lg{font-size:12px;font-weight:600;background:var(--soft);border-radius:6px;padding:4px 10px;color:#737373}
 .lg.on{background:#000;color:#fff}
@@ -160,6 +165,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
     <div class="dots" id="dots"></div>
     <div class="pb">
       <div class="meta" id="meta"></div>
+      <div id="rot"></div>
       <div class="lang" id="lang"></div>
       <div class="cap" id="cap"></div>
     </div>
@@ -196,6 +202,20 @@ const POSTS = [
   "cap": {
    "pt": "Esta paciente chegou até nós com uma queixa: a flacidez na barriga.\n\nÉ uma das queixas que mais ouvimos na clínica, e muitas vezes nem o exercício nem a alimentação conseguem resolver. Na avaliação, definimos um protocolo personalizado para o corpo dela, com Endolift corporal: uma fibra muito fina, introduzida sob a pele, que estimula a produção de colagénio e ajuda a pele a retrair, com pouco tempo de recuperação e resultados progressivos. O resultado está no vídeo — sem cirurgia.\n\nImagine entrar em 2027 com esta barriga. O resultado dela começou com uma avaliação; o seu pode começar hoje. Envie-nos uma mensagem e marque já a sua.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.",
    "en": "This patient came to us with one concern: loose skin on her tummy.\n\nIt's one of the concerns we hear most at the clinic, and often neither exercise nor diet can fix it. After her assessment, we designed a personalised protocol for her body with body Endolift: a very thin fibre placed under the skin that stimulates collagen production and helps the skin tighten, with little downtime and progressive results. The result is in the video — no surgery.\n\nImagine starting 2027 with this tummy. Her result began with an assessment; yours can begin today. Send us a message and book yours now.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "resultado",
+   "tema": "Endolift corporal no abdómen",
+   "caso": "sim — paciente do Endolift corporal no abdómen (mesmas fotos do Carrossel 1: antes e depois de lado e de frente)",
+   "gancho": "abre já com o antes e depois",
+   "copy": [
+    "Antes: flacidez na barriga. Depois: este resultado — sem cirurgia.",
+    "Uma queixa que ouvimos muito — e que muitas vezes nem o exercício nem a alimentação resolvem.",
+    "Na avaliação, definimos um protocolo pensado para o corpo dela, com Endolift corporal.",
+    "O Endolift atua por dentro: uma fibra muito fina, sob a pele, estimula o colagénio e ajuda a pele a retrair.",
+    "E este é o resultado. Sem cirurgia.",
+    "Imagine entrar em 2027 com esta barriga. O resultado dela começou com uma avaliação — o seu pode começar hoje. Marque já a sua."
+   ]
   }
  },
  {
@@ -206,6 +226,20 @@ const POSTS = [
   "cap": {
    "pt": "Esta paciente chegou à clínica com uma queixa: a papada.\n\nA papada nem sempre é sinal de peso a mais. Muitas vezes é a pele a perder firmeza com o passar dos anos — e, nesse caso, nem a dieta nem o exercício conseguem resolver. Na avaliação, definimos um protocolo personalizado para ela, que trabalhou a firmeza nas camadas profundas da pele, sem cirurgia e sem cortes. Repare no pescoço dela no fim do vídeo.\n\nEste ano, as fotos de Natal e de Ano Novo também podem ser diferentes para si. Envie-nos uma mensagem, marque hoje a sua avaliação e chegue a 2027 com o contorno que sempre quis.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.",
    "en": "This patient came to the clinic with one concern: her double chin.\n\nA double chin isn't always about weight. Often it's the skin losing firmness over the years — and then neither diet nor exercise can fix it. After her assessment, we designed a personalised protocol that worked on firmness in the deeper layers of the skin, with no surgery and no incisions. Look at her neck at the end of the video.\n\nThis year, your Christmas and New Year photos can look different too. Send us a message, book your assessment today and start 2027 with the contour you've always wanted.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "resultado",
+   "tema": "papada e contorno do pescoço",
+   "caso": "sim — resultado da papada que a Poli enviou no grupo (se a paciente não autorizar o rosto, mostrar só o pescoço)",
+   "gancho": "abre já com o antes e depois",
+   "copy": [
+    "Antes: a papada. Depois: o contorno definido — sem cirurgia e sem cortes.",
+    "E a papada nem sempre é peso a mais. Muitas vezes é a pele a perder firmeza com o tempo.",
+    "Na avaliação, definimos um protocolo para trabalhar a firmeza nas camadas profundas da pele, sem cirurgia e sem cortes.",
+    "Agora repare no pescoço dela.",
+    "Resultado real desta paciente.",
+    "Este ano, as fotos de Natal e de Ano Novo também podem ser diferentes para si. Marque já a sua avaliação e chegue a 2027 com o contorno que sempre quis."
+   ]
   }
  },
  {
@@ -230,6 +264,20 @@ const POSTS = [
   "cap": {
    "pt": "Esta paciente chegou até nós com as manchas que o sol deixou na pele.\n\nAs manchas são das queixas mais comuns depois do verão, e cada uma tem uma origem diferente. Por isso, antes de tudo, olhámos para a pele dela e definimos um protocolo personalizado, com laser. O inverno é a melhor altura para tratar: com menos exposição solar, a pele recupera melhor e o risco de novas manchas é menor. E o protetor solar continua indispensável, todos os dias.\n\nQuer começar 2027 sem as manchas deste verão? A pele dela mudou; a sua pode começar a mudar já. Envie-nos uma mensagem e marque hoje a sua avaliação.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.",
    "en": "This patient came to us with the dark spots the sun had left on her skin.\n\nDark spots are one of the most common concerns after summer, and each one has a different cause. So, first of all, we looked at her skin and designed a personalised protocol with laser. Winter is the best time to treat them: with less sun exposure, the skin recovers better and there's a lower risk of new spots. And sunscreen is still a must, every single day.\n\nWant to start 2027 without this summer's dark spots? Her skin changed; yours can start changing now. Send us a message and book your assessment today.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "resultado",
+   "tema": "manchas do verão",
+   "caso": "sim — resultado da Dani com laser (o que a Poli mostrou nos stories)",
+   "gancho": "abre já com o antes e depois",
+   "copy": [
+    "Antes: as manchas que o sol deixou. Depois: a pele dela assim.",
+    "As manchas são das queixas mais comuns depois do verão — e cada uma tem uma origem diferente.",
+    "Por isso, antes de tudo, olhámos para a pele dela e definimos o protocolo certo, com laser.",
+    "E o inverno é a melhor altura para tratar: com menos sol, a pele recupera melhor.",
+    "Veja a diferença na pele dela.",
+    "Quer começar 2027 sem as manchas deste verão? A pele dela mudou — a sua pode começar a mudar já. Marque a sua avaliação."
+   ]
   }
  },
  {
@@ -240,6 +288,20 @@ const POSTS = [
   "cap": {
    "pt": "Ela fez harmonização facial. Consegue perceber onde?\n\nNo caso da Vivian, o plano juntou duas frentes. A nossa equipa médica fez a harmonização facial completa, incluindo os lábios, e a equipa estética cuidou da pele para lhe devolver luminosidade. Um protocolo pensado só para ela, que valorizou os seus traços sem lhe mudar a identidade: ela continua a ser ela, só que mais bonita.\n\nImagine ouvir \"estás tão bonita\" em todas as festas de fim de ano — sem ninguém perceber porquê. Diga-nos nos comentários onde acha que mudou e envie-nos uma mensagem para marcar hoje a sua avaliação médica.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.\n\nProcedimento realizado pelo Dr. Angelo Mariano – Medicina Estética | OM69311",
    "en": "She had facial harmonisation. Can you tell where?\n\nIn Vivian's case, the plan worked on two fronts. Our medical team performed a full facial harmonisation, including the lips, and our aesthetics team took care of her skin to bring back its radiance. A protocol designed just for her, enhancing her features without changing who she is: she's still herself, just more beautiful.\n\nImagine hearing \"you look amazing\" at every end-of-year party — without anyone knowing why. Tell us in the comments where you think it changed, and send us a message to book your medical assessment today.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "resultado",
+   "tema": "harmonização facial natural",
+   "caso": "sim — Vivian: harmonização facial completa com lábios, feita pelo Dr. Angelo, e cuidados de pele com a equipa estética",
+   "gancho": "abre já com o antes e depois",
+   "copy": [
+    "Antes e depois da Vivian. Consegue perceber onde ela fez harmonização?",
+    "No caso da Vivian, o plano juntou duas frentes: o rosto e a pele.",
+    "A equipa médica fez a harmonização facial completa, incluindo os lábios.",
+    "E a equipa estética cuidou da pele, para devolver a luminosidade.",
+    "O resultado: ela continua a ser ela — só que mais bonita.",
+    "Imagine ouvir \"estás tão bonita\" em todas as festas — sem ninguém perceber porquê. Marque já a sua avaliação médica."
+   ]
   }
  },
  {
@@ -263,6 +325,20 @@ const POSTS = [
   "cap": {
    "pt": "Quer chegar ao verão de 2027 com o corpo que sonha? Então o momento de começar é agora.\n\nEstas duas pacientes queriam mudar a mesma zona: a barriga. Numa, a queixa era a flacidez, e o protocolo dela incluiu Endolift corporal. Na outra, era o inchaço, e o protocolo dela incluiu drenagem. A mesma zona, dois protocolos personalizados — porque cada corpo pede um caminho diferente. E em todos os casos, os melhores resultados constroem-se ao longo das semanas e dos meses.\n\nO corpo dos sonhos não aparece em janeiro: constrói-se a partir de hoje. Envie-nos uma mensagem e marque já a sua avaliação.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.",
    "en": "Want to reach summer 2027 with the body you've been dreaming of? Then the time to start is now.\n\nThese two patients wanted to change the same area: their tummy. For one, the concern was loose skin, and her protocol included body Endolift. For the other, it was bloating, and her protocol included lymphatic drainage. Same area, two personalised protocols — because every body needs its own path. And in every case, the best results are built over weeks and months.\n\nYour dream body doesn't appear in January: it's built from today. Send us a message and book your assessment now.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "educação + oferta + resultado",
+   "tema": "o corpo de 2027 constrói-se agora",
+   "caso": "sim — duas pacientes: a do Endolift corporal no abdómen e a da drenagem (barriga)",
+   "gancho": "abre já com os dois antes e depois",
+   "copy": [
+    "Duas barrigas, dois resultados. E o corpo de 2027 começa a construir-se agora.",
+    "Veja estas duas pacientes. As duas queriam mudar a barriga.",
+    "Numa, a queixa era a flacidez — e o protocolo dela incluiu Endolift corporal.",
+    "Na outra, era o inchaço — e o protocolo dela incluiu drenagem.",
+    "A mesma zona, dois protocolos diferentes. E nos dois casos, o resultado constrói-se com tempo.",
+    "O corpo dos sonhos não aparece em janeiro: constrói-se a partir de hoje. Marque já a sua avaliação."
+   ]
   }
  },
  {
@@ -273,6 +349,20 @@ const POSTS = [
   "cap": {
    "pt": "Ainda dá tempo de ter a pele bonita para o Natal? Veja esta paciente.\n\nEla fez uma limpeza de pele aqui na clínica — repare na pele dela no início e no fim da sessão. É o tipo de cuidado que devolve luminosidade quase de imediato, ideal para a semana da festa. Mas há tratamentos que constroem a pele aos poucos, como o microagulhamento e o tratamento de manchas, e esses precisam de começar já. Na Poliestética Vilamoura, olhamos para a sua pele e para a data da sua festa e definimos o protocolo personalizado que faz sentido para si.\n\nBrilhe nas festas e entre em 2027 com a pele que sempre quis. Envie-nos uma mensagem e marque hoje a sua avaliação.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.",
    "en": "Is there still time to get your skin party-ready for Christmas? Look at this patient.\n\nShe had a facial cleanse here at the clinic — look at her skin at the start and at the end of the session. It's the kind of treatment that brings back radiance almost straight away, perfect for the week of the party. But some treatments build your skin up gradually, like microneedling and pigmentation treatment, and those need to start now. At Poliestética Vilamoura, we look at your skin and at the date of your party, and define the personalised protocol that makes sense for you.\n\nGlow at every party and start 2027 with the skin you've always wanted. Send us a message and book your assessment today.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "educação + oferta + resultado",
+   "tema": "pele de festa: o que dá tempo até ao Natal",
+   "caso": "sim — paciente da limpeza de pele gravada na clínica",
+   "gancho": "abre já com o início e o fim da sessão",
+   "copy": [
+    "Início da sessão. Fim da sessão. Ainda dá tempo de ter esta pele no Natal.",
+    "Ela fez uma limpeza de pele aqui na clínica. Repare na pele dela no início e no fim da sessão.",
+    "É o tipo de cuidado que dá luminosidade quase imediata — ideal para a semana da festa.",
+    "Mas há tratamentos que constroem a pele aos poucos, como o microagulhamento e o tratamento de manchas. Esses têm de começar já.",
+    "Na avaliação, olhamos para a sua pele e para a data da sua festa, e definimos o seu protocolo.",
+    "Brilhe nas festas e entre em 2027 com a pele que sempre quis. Marque já a sua avaliação."
+   ]
   }
  },
  {
@@ -311,6 +401,20 @@ const POSTS = [
   "cap": {
    "pt": "A sua barriga incha depois de cada jantar de Natal? Veja esta paciente.\n\nA queixa dela era a barriga inchada. Sal a mais, pouca água e muitas horas sentada fazem o corpo reter líquidos — e dezembro junta tudo isto. Na avaliação, definimos um protocolo personalizado para ela, com drenagem, para estimular a circulação e devolver a sensação de leveza. O antes e o depois estão no vídeo.\n\nPasse as festas leve e entre em 2027 a sentir-se bem no seu corpo. Envie-nos uma mensagem e marque hoje a sua avaliação.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.",
    "en": "Does your tummy feel bloated after every Christmas dinner? Look at this patient.\n\nHer concern was a bloated tummy. Too much salt, too little water and long hours sitting down make the body retain fluids — and December brings all of it together. After her assessment, we designed a personalised protocol for her with lymphatic drainage, to stimulate circulation and bring back that feeling of lightness. The before and after are in the video.\n\nEnjoy the holidays feeling light and start 2027 feeling good in your body. Send us a message and book your assessment today.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "educação + oferta + resultado",
+   "tema": "o inchaço das festas",
+   "caso": "sim — paciente da drenagem (antes e depois da barriga, na mesma posição)",
+   "gancho": "abre já com o antes e depois",
+   "copy": [
+    "Antes: barriga inchada. Depois: assim.",
+    "A queixa dela era a barriga inchada.",
+    "Sal a mais, pouca água e muitas horas sentada fazem o corpo reter líquidos — e dezembro junta tudo isso.",
+    "O protocolo dela incluiu drenagem, para estimular a circulação e devolver a sensação de leveza.",
+    "Veja a barriga dela antes e depois.",
+    "Passe as festas leve e entre em 2027 a sentir-se bem no seu corpo. Marque já a sua avaliação."
+   ]
   }
  },
  {
@@ -321,6 +425,20 @@ const POSTS = [
   "cap": {
    "pt": "Vai deixar tudo para janeiro? Veja isto antes.\n\nHá três erros que atrasam qualquer resultado: achar que se resolve tudo numa sessão, escolher o tratamento pelo que se viu na internet e esperar pelo ano novo para começar. As pacientes deste vídeo — da barriga, da papada e das manchas — começaram todas por uma avaliação e tiveram um protocolo personalizado, com o tempo certo para cada caso.\n\nEnquanto uns esperam por janeiro, outros já estão a construir o corpo e a pele de 2027. Envie-nos uma mensagem e marque hoje a sua avaliação.\n\nEm conformidade com o Regime Jurídico da Publicidade em Saúde (DL 238/2015), informamos que: 1) Toda a prestação de cuidados de saúde requer diagnóstico clínico prévio; 2) Não garantimos resultados específicos, uma vez que a medicina não é uma ciência exata e depende de fatores biológicos individuais; 3) Os depoimentos ou casos apresentados (se houver) não devem ser interpretados como garantia de cura ou sucesso terapêutico. Esta publicidade pertence à empresa Episódio Aconchegante – Estética Avançada LDA. NIF: 517920689.\n\nEste procedimento foi realizado na unidade da Poliestética Vilamoura.",
    "en": "Leaving it all until January? Watch this first.\n\nThree mistakes slow down any result: thinking one session will fix everything, choosing a treatment based on something you saw online, and waiting for the new year to start. The patients in this video — tummy, double chin and dark spots — all started with an assessment and had a personalised protocol, with the right timing for each case.\n\nWhile some wait for January, others are already building their 2027 body and skin. Send us a message and book your assessment today.\n\nIn accordance with Portuguese health advertising law (DL 238/2015): 1) all healthcare requires a prior clinical assessment; 2) specific results are not guaranteed, as medicine is not an exact science and depends on individual biological factors; 3) any testimonials or cases shown should not be taken as a guarantee of cure or therapeutic success."
+  },
+  "roteiro": {
+   "tipo": "educação + oferta + resultado",
+   "tema": "3 erros de quem deixa tudo para janeiro",
+   "caso": "sim — sequência com as pacientes do Endolift, da papada e das manchas",
+   "gancho": "abre já com a sequência dos três antes e depois",
+   "copy": [
+    "Três pacientes, três resultados. Vai deixar o seu para janeiro?",
+    "Erro 1: achar que se resolve tudo numa sessão. Estas pacientes tiveram um protocolo pensado para elas, com o tempo certo.",
+    "Erro 2: escolher o tratamento pelo que viu na internet. Todas começaram por uma avaliação.",
+    "Erro 3: esperar pelo ano novo. Quem começa agora chega a 2027 com meio caminho feito.",
+    "Estes são os resultados delas.",
+    "Enquanto uns esperam por janeiro, outros já estão a construir o corpo e a pele de 2027. Marque já a sua avaliação."
+   ]
   }
  },
  {
@@ -427,6 +545,10 @@ function openPub(i){
 
 /* post modal */
 let cur = null, idx = 0, lang = "pt";
+function showRot(){
+  const r = cur.roteiro;
+  $("rot").innerHTML = r ? `<div class="rot"><h4>ROTEIRO PARA GRAVAR</h4><div><span class="k">Tipo:</span> ${esc(r.tipo)}</div><div><span class="k">Tema:</span> ${esc(r.tema)}</div><div><span class="k">Caso real de paciente:</span> ${esc(r.caso)}</div><div><span class="k">Gancho:</span> ${esc(r.gancho)}</div><ol>${r.copy.map(l => `<li>${esc(l)}</li>`).join("")}</ol></div>` : "";
+}
 function showCap(){
   $("lang").innerHTML = ["pt","en"].map(l => `<button class="lg${l===lang?" on":""}" data-l="${l}">${l.toUpperCase()}</button>`).join("");
   $("cap").lang = lang === "en" ? "en" : "pt-PT";
@@ -438,7 +560,7 @@ function openPost(i){
   $("track").innerHTML = sl.map(id => id ? `<div class="slide"><img src="${B(id)}" alt=""></div>` : `<div class="slide wip">${/reels/i.test(cur.f)?"Reels para gravar":"Arte em produção"}</div>`).join("");
   $("dots").innerHTML = sl.length > 1 ? sl.map((_,k) => `<i${k?"":' class="on"'}></i>`).join("") : "";
   $("meta").innerHTML = `<span class="chip pub">${pubTxt(cur)}</span><span class="chip">${cur.f}${sl.length>1?` · ${sl.length} lâminas`:""}</span>`;
-  lang = "pt"; showCap();
+  lang = "pt"; showCap(); showRot();
   $("ov").classList.add("on"); document.body.style.overflow = "hidden";
   $("track").scrollLeft = 0; upd();
 }
