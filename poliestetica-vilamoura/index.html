@@ -408,7 +408,7 @@ function render(){
   let html = '<div class="grid">';
   list.forEach(p => {
     const i = POSTS.indexOf(p);
-    if (!p.s.length || !p.s[0]) html += `<button class="cell wip" data-p="${i}">${/reels/i.test(p.f)?IREEL+"Roteiro para gravar":"Arte em produção"}<br>${dd(p.d)}</button>`;
+    if (!p.s.length || !p.s[0]) html += `<button class="cell wip" data-p="${i}">${/reels/i.test(p.f)?IREEL+"Reels para gravar":"Arte em produção"}<br>${dd(p.d)}</button>`;
     else html += `<button class="cell" data-p="${i}"><img loading="lazy" src="${B(p.s[0])}" alt="Post de ${dd(p.d)}">${/reels/i.test(p.f)?IREEL:isCar(p)?ICAR:""}<span class="dt">${dd(p.d)}</span></button>`;
   });
   plist.forEach(p => {
@@ -435,7 +435,7 @@ function showCap(){
 function openPost(i){
   cur = POSTS[i]; idx = 0;
   const sl = cur.s.length ? cur.s : [null];
-  $("track").innerHTML = sl.map(id => id ? `<div class="slide"><img src="${B(id)}" alt=""></div>` : `<div class="slide wip">${/reels/i.test(cur.f)?"Roteiro para gravar":"Arte em produção"}</div>`).join("");
+  $("track").innerHTML = sl.map(id => id ? `<div class="slide"><img src="${B(id)}" alt=""></div>` : `<div class="slide wip">${/reels/i.test(cur.f)?"Reels para gravar":"Arte em produção"}</div>`).join("");
   $("dots").innerHTML = sl.length > 1 ? sl.map((_,k) => `<i${k?"":' class="on"'}></i>`).join("") : "";
   $("meta").innerHTML = `<span class="chip pub">${pubTxt(cur)}</span><span class="chip">${cur.f}${sl.length>1?` · ${sl.length} lâminas`:""}</span>`;
   lang = "pt"; showCap();
